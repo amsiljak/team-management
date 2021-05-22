@@ -1,6 +1,6 @@
 import React from 'react';
 import {
-    Button, CardColumns, Label
+    Button, CardDeck, CardGroup, Label
   } from 'reactstrap';
 import { useHistory } from 'react-router-dom';
 import './Groups.css';
@@ -17,19 +17,21 @@ function Groups  () {
         switchRoute('/sign-up');
     }
 
-    const groups = [{id:1, number: 6, theme: "Bankarski sistem"}, {id:2, number: 3, theme: "Kino"}]
+    const groups = [{id:1, number: 6, theme: "Bankarski sistem"}, {id:2, number: 3, theme: "Kino"},{id:1, number: 6, theme: "Bankarski sistem"}, {id:2, number: 3, theme: "Kino"},{id:1, number: 6, theme: "Bankarski sistem"}, {id:2, number: 3, theme: "Kino"}]
     return (
-        <div>
-            <h4 className="text-center">Odaberite grupu kojoj pripadate na predmetu OOAD</h4>
+        <div className="form">
+            <Label tag = "p" size="lg" className="text-center mt-5">Odaberite grupu kojoj pripadate na predmetu OOAD</Label>
             <div>
                 <a style={{ cursor: 'pointer' }} onClick={groupSelectedCallback}>
-                    <CardColumns className="pt-5">
+                    <div className="py-3 grupe row">
                         {groups.map(group => <Group key={group.id} group={group}/>)}
-                    </CardColumns>
+                    </div>
                 </a>
-                <Label tag = "p" size="sm" className="text-center pt-5">Ne vidite svoju grupu?</Label>
-                <div className="text-center">
-                    <Button color="dark" size="md" className="center" onClick={switchRoute("/group-create")}>Kreiraj novu grupu</Button>
+                <div className="newGroup">
+                    <p className="text-center">Ne vidite svoju grupu?</p>
+                    <div className="text-center">
+                        <Button color="dark" size="md" className="center mb-5" onClick={() => switchRoute("/group-create")}>Kreiraj novu grupu</Button>
+                    </div>
                 </div>
             </div>
         </div>

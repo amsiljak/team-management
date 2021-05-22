@@ -15,8 +15,8 @@ function App () {
                         <Route path='/login' component={Login}/>
                         <Route path='/dashboard' component={Dashboard}/>
                         <Route path='/sign-up' component={Signup}/>
-                        <Route path='/group-create' component={GroupCreate}/>
                         <Route path='/groups' component={Groups}/>
+                        <Route path='/group-create' component={GroupCreate}/>
                         <Route path='/' component={Dashboard}/>
                     </Switch>
                 </div>

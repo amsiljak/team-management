@@ -1,9 +1,11 @@
 .login-form {
-    width: 100%;
-    height: 100%;
-    max-width: 330px;
-    padding: 15px;
-    margin: auto;
+    position: absolute;
+    left: 0;
+    right: 0;
+    width: 300px;
+    padding-top: 12%;
+    margin: 0 auto;   
+    display:block;
 }
 .block {
     display: block;

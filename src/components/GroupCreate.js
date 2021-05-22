@@ -10,7 +10,7 @@ function GroupCreate  () {
     };
 
     return (
-        <Form className="login-form rounded" body inverse style={{ backgroundColor: '#ffffff'}}>
+        <Form className="login-form rounded" >
                 <Label tag = "h1" className="text-center">Kreiranje grupe</Label>
                 <FormGroup className="pt-2">
                     <Label for="no">Broj grupe</Label>
@@ -30,7 +30,7 @@ function GroupCreate  () {
                         <option>Petak</option>
                     </Input>
                 </FormGroup>
-                <Button color="dark" size="lg" className="block mt-3" onClick={()=>switchRoute('/dashboard')}>Kreiraj grupu</Button>
+                <Button color="dark" size="lg" className="block mt-3 mb-5" onClick={()=>switchRoute('/dashboard')}>Kreiraj grupu</Button>
         </Form>
     );
 };
