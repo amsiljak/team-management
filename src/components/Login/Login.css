@@ -1,15 +1,10 @@
-.login-form {
-    position: absolute;
-    left: 0;
-    right: 0;
-    width: 300px;
-    padding-top: 12%;
-    margin: 0 auto;   
-    display:block;
-}
 .block {
     display: block;
     width: 100%;
     border: none;
     text-align: center;
-  }
+}
+.login-label {
+    padding-top: 8%;
+    padding-bottom: 1%;
+}
