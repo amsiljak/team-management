@@ -69,11 +69,11 @@ function Login() {
           </InputGroupAddon>
           <Input type="password" name="password" placeholder="Password" value={formData.password} onChange={handleChange} />
         </InputGroup>
-        <Button color="dark" size="lg" className="block mt-4" onClick={handleSubmit}>
+        <Button color="dark" size="lg" className="block mt-2" onClick={handleSubmit}>
           Login
         </Button>
-        <div className="text-center mt-3 mb-4">
-          <a href="/sign-up">Nemate račun? Registrujte se</a>
+        <div className="text-center mt-2 mb-4">
+          <a href="/sign-up" className="small">Nemate račun? Registrujte se</a>
         </div>
       </Form>
     </div>

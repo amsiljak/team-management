@@ -12,7 +12,7 @@ import {
 import { useHistory } from "react-router-dom";
 import { HiOutlineMail } from "react-icons/hi";
 import { AiOutlineLock } from "react-icons/ai";
-import "../Form.css"
+import "../Form.css";
 
 function Signup() {
   const history = useHistory();
@@ -48,31 +48,49 @@ function Signup() {
       password: formData.password,
     };
 
-    switchRoute("/groups")
+    switchRoute("/groups");
   };
 
   return (
     <div>
       <div>
-        <Label tag="h1" className="text-center mt-5 mb-4 class-name">
-          Registracija
+        <Label tag="h1" className="text-center mt-5 class-name">
+          Kreiranje računa
+        </Label>
+        <Label tag="p" size="md" className="text-center mt-1 mb-4">
+          Kao prvi korak, unesite svoje lične podatke
         </Label>
         <Form className="signup-form form">
-          <h5 className="text-center pt-3">
-            Kao prvi korak, unesite svoje lične podatke
-          </h5>
           <FormGroup className="pt-2">
             <Label for="name">Ime</Label>
-            <Input type="text" name="name" id="name" value={formData.name} onChange={handleChange}/>
+            <Input
+              type="text"
+              name="name"
+              id="name"
+              value={formData.name}
+              onChange={handleChange}
+            />
           </FormGroup>
           <FormGroup className="pt-2">
             <Label for="lastname">Prezime</Label>
-            <Input type="text" name="lastname" id="lastname" value={formData.lastname} onChange={handleChange}/>
+            <Input
+              type="text"
+              name="lastname"
+              id="lastname"
+              value={formData.lastname}
+              onChange={handleChange}
+            />
           </FormGroup>
           <FormGroup className="pt-2">
             <Label for="email">Email adresa</Label>
             <InputGroup>
-              <Input type="email" name="email" id="email" value={formData.email} onChange={handleChange}/>
+              <Input
+                type="email"
+                name="email"
+                id="email"
+                value={formData.email}
+                onChange={handleChange}
+              />
               <InputGroupAddon addonType="append">
                 <InputGroupText>
                   <HiOutlineMail className="mb-1 mt-1" />
@@ -83,7 +101,13 @@ function Signup() {
           <FormGroup className="pt-2">
             <Label for="password">Password</Label>
             <InputGroup>
-              <Input type="password" name="password" id="password" value={formData.password} onChange={handleChange}/>
+              <Input
+                type="password"
+                name="password"
+                id="password"
+                value={formData.password}
+                onChange={handleChange}
+              />
               <InputGroupAddon addonType="prepend">
                 <InputGroupText>
                   <AiOutlineLock className="mb-1 mt-1" />
@@ -98,7 +122,8 @@ function Signup() {
                 type="password"
                 name="repeatedpassword"
                 id="repeatedpassword"
-                value={formData.repeatedpassword} onChange={handleChange}
+                value={formData.repeatedpassword}
+                onChange={handleChange}
               />
               <InputGroupAddon addonType="append">
                 <InputGroupText>

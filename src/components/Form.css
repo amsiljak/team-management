@@ -1,28 +1,33 @@
 .form {
-    position: absolute;
-    left: 0;
-    right: 0;
-    margin: 0 auto;   
-    display:block;
-    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.1), 0 6px 20px 0 rgba(0, 0, 0, 0.1);
+  position: absolute;
+  left: 0;
+  right: 0;
+  margin: 0 auto;
+  display: block;
+  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.1), 0 6px 20px 0 rgba(0, 0, 0, 0.1);
 }
 .login-form {
-    width: 350px;
-    padding-left: 3%;
-    padding-right: 3%;
-    padding-top: 2%;
+  width: 350px;
+  padding-left: 3%;
+  padding-right: 3%;
+  padding-top: 2%;
 }
 .signup-form {
-    width: 350px;
-    padding-left: 3%;
-    padding-right: 3%;
-    padding-top: 1%;
-    margin-bottom: 3%;
+  width: 350px;
+  padding-left: 3%;
+  padding-right: 3%;
+  padding-top: 1%;
+  margin-bottom: 3%;
 }
 .group-create-form {
-    width: 350px;
-    padding-left: 3%;
-    padding-right: 3%;
-    padding-top: 1%;
-    margin-bottom: 3%;
+  width: 350px;
+  padding-left: 3%;
+  padding-right: 3%;
+  padding-top: 1%;
+  margin-bottom: 3%;
+}
+.signup-text {
+  font-size: medium;
+  margin: 0 auto;
+  padding-bottom: 5px;
 }

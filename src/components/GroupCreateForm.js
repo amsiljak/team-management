@@ -21,9 +21,9 @@ function GroupCreate() {
   };
 
   const initialFormData = {
-    no: "",
+    no: "1",
     theme: "",
-    tutorialday: "",
+    tutorialday: "Ponedjeljak",
   };
 
   const [formData, updateFormData] = React.useState(initialFormData);
@@ -43,14 +43,17 @@ function GroupCreate() {
       theme: formData.theme,
       tutorialday: formData.tutorialday,
     };
-
+    console.log(user);
     switchRoute("/");
   };
 
   return (
     <>
-      <Label tag="h1" className="text-center pt-5 pb-3">
-        Nova grupa
+      <Label tag="h2" className="text-center pt-5">
+        Kreiranje grupe
+      </Label>
+      <Label tag="p" size="md" className="text-center mt-1 mb-4">
+        Unesite podatke o svojoj grupi
       </Label>
       <Form className="group-create-form form rounded">
         <FormGroup className="pt-2">
@@ -91,14 +94,11 @@ function GroupCreate() {
           </Label>
           <Input
             type="select"
-            name="select"
+            name="tutorialday"
             id="tutorialday"
             value={formData.tutorialday}
             onChange={handleChange}
           >
-            <option value="" disabled selected>
-              Odaberite dan
-            </option>
             <option>Ponedjeljak</option>
             <option>Utorak</option>
             <option>Srijeda</option>
