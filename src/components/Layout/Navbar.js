@@ -5,15 +5,11 @@ import {
   NavbarToggler,
   NavbarBrand,
   Nav,
-  NavItem,
-  NavLink,
   UncontrolledDropdown,
   DropdownToggle,
   DropdownMenu,
-  DropdownItem,
-  NavbarText,
+  DropdownItem
 } from "reactstrap";
-import "./Navbar.css";
 
 function NavBar() {
   const [isOpen, setIsOpen] = useState(false);

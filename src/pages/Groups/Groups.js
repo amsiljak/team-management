@@ -31,13 +31,13 @@ function Groups() {
       </Label>
       <div>
         <a style={{ cursor: "pointer" }} onClick={groupSelectedCallback}>
-          <div className="py-3 grupe row">
+          <div className="py-3 groups row">
             {groups.map((group) => (
               <GroupComponent key={group.id} group={group} />
             ))}
           </div>
         </a>
-        <div className="newGroup">
+        <div className="new-group">
           <p className="text-center new-group-text">
             Ne vidite grupu kojoj pripadate?
           </p>

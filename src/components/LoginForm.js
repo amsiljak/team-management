@@ -9,8 +9,7 @@ import {
   InputGroupAddon,
   InputGroupText,
 } from "reactstrap";
-import "./Login.css";
-import "../Form.css"
+import "./Form.css"
 import { AiOutlineLock } from "react-icons/ai";
 import { HiOutlineMail } from "react-icons/hi";
 import { useHistory } from "react-router-dom";

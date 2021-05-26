@@ -31,3 +31,13 @@
   margin: 0 auto;
   padding-bottom: 5px;
 }
+.block {
+    display: block;
+    width: 100%;
+    border: none;
+    text-align: center;
+}
+.login-label {
+    padding-top: 8%;
+    padding-bottom: 1%;
+}
