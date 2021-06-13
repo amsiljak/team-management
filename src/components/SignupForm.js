@@ -13,6 +13,7 @@ import {
 import { useHistory } from "react-router-dom";
 import { HiOutlineMail } from "react-icons/hi";
 import { AiOutlineLock } from "react-icons/ai";
+import { validEmail, validPassword } from "./regex.js";
 import "./Form.css";
 
 function Signup() {
@@ -32,10 +33,36 @@ function Signup() {
 
   const [formData, updateFormData] = React.useState(initialFormData);
 
+  const initialformErrors = {
+    name: false,
+    lastname: false,
+    email: false,
+    password: false,
+    repeatedpassword: false,
+  };
+
+  const [formErrors, updateFormErrors] = React.useState(initialformErrors);
+
   const handleChange = (e) => {
+    const name = e.target.name;
+    const value = e.target.value;
+
     updateFormData({
       ...formData,
-      [e.target.name]: e.target.value.trim(),
+      [name]: e.target.value.trim(),
+    });
+
+    var error;
+    const re = "^S+@S+$";
+    if (name == "name" || name == "lastname") error = value.length == 0;
+    else if (name == "email") error = !validEmail.test(value);
+    else if (name == "password")
+      error = !(value.length >= 8 && value.length <= 20);
+    else if (name == "repeatedpassword") error = value != formData.password;
+
+    updateFormErrors({
+      ...formErrors,
+      [name]: error,
     });
   };
 
@@ -48,8 +75,8 @@ function Signup() {
       email: formData.email,
       password: formData.password,
     };
-
-    switchRoute("/groups");
+    const hasErrors = false;
+    if(Object.values(formErrors).every(error => error == false)) switchRoute("/groups");
   };
 
   return (
@@ -65,7 +92,7 @@ function Signup() {
           <FormGroup className="pt-2">
             <Label for="name">Ime</Label>
             <Input
-              invalid
+              invalid={formErrors.name}
               type="text"
               name="name"
               id="name"
@@ -76,7 +103,8 @@ function Signup() {
           </FormGroup>
           <FormGroup className="pt-2">
             <Label for="lastname">Prezime</Label>
-            <Input invalid
+            <Input
+              invalid={formErrors.lastname}
               type="text"
               name="lastname"
               id="lastname"
@@ -88,7 +116,8 @@ function Signup() {
           <FormGroup className="pt-2">
             <Label for="email">Email adresa</Label>
             <InputGroup>
-              <Input invalid
+              <Input
+                invalid={formErrors.email}
                 type="email"
                 name="email"
                 id="email"
@@ -103,13 +132,12 @@ function Signup() {
               </InputGroupAddon>
               <FormFeedback invalid>Unesite validnu email adresu!</FormFeedback>
             </InputGroup>
-            
           </FormGroup>
           <FormGroup className="pt-2">
             <Label for="password">Password</Label>
             <InputGroup>
               <Input
-                invalid
+                invalid={formErrors.password}
                 type="password"
                 name="password"
                 id="password"
@@ -130,7 +158,8 @@ function Signup() {
           <FormGroup className="pt-2 pb-1">
             <Label for="repeatedpassword">Ponovite password</Label>
             <InputGroup>
-              <Input invalid
+              <Input
+                invalid={formErrors.repeatedpassword}
                 type="password"
                 name="repeatedpassword"
                 id="repeatedpassword"
