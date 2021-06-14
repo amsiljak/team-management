@@ -14,6 +14,7 @@ import { useHistory } from "react-router-dom";
 import { HiOutlineMail } from "react-icons/hi";
 import { AiOutlineLock } from "react-icons/ai";
 import { validEmail, validPassword } from "./regex.js";
+import axios from "axios";
 import "./Form.css";
 
 function Signup() {
@@ -75,8 +76,15 @@ function Signup() {
       email: formData.email,
       password: formData.password,
     };
-    const hasErrors = false;
-    if(Object.values(formErrors).every(error => error == false)) switchRoute("/groups");
+    
+    if (Object.values(formErrors).every((formError) => formError == false)) {
+      axios
+        .post("http://localhost:3000/users/createUser", user)
+        .then(res => {
+          switchRoute("/groups");
+        })
+        .catch()
+    }
   };
 
   return (
