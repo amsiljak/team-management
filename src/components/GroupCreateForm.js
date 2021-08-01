@@ -8,10 +8,12 @@ import {
   InputGroup,
   InputGroupAddon,
   InputGroupText,
+  FormFeedback,
 } from "reactstrap";
 import { useHistory } from "react-router-dom";
 import "./Form.css";
 import { BsCursorText } from "react-icons/bs";
+import axios from "axios";
 
 function GroupCreate() {
   const history = useHistory();
@@ -28,23 +30,48 @@ function GroupCreate() {
 
   const [formData, updateFormData] = React.useState(initialFormData);
 
+  const initialFormErrors = {
+    theme: false,
+  };
+
+  const [formErrors, updateFormErrors] = React.useState(initialFormErrors);
+
   const handleChange = (e) => {
+    const name = e.target.name;
+    const value = e.target.value;
+
     updateFormData({
       ...formData,
-      [e.target.name]: e.target.value.trim(),
+      [name]: value,
+    });
+
+    var error;
+    if (name == "theme") error = !(value.length > 0 && value.length < 50);
+
+    updateFormErrors({
+      ...formErrors,
+      theme: error,
     });
   };
 
   const handleSubmit = (e) => {
     e.preventDefault();
 
-    const user = {
-      no: formData.no,
-      theme: formData.theme,
-      tutorialday: formData.tutorialday,
-    };
-    console.log(user);
-    switchRoute("/");
+    if (formData.theme.length == 0) alert("Morate unijeti temu projekta!");
+    else {
+      const group = {
+        no: formData.no,
+        theme: formData.theme,
+        tutorialday: formData.tutorialday,
+      };
+
+      axios
+        .post("http://localhost:3000/groups/createGroup", group)
+        .then(() => {
+          switchRoute("/");
+        })
+        .catch();
+    }
   };
 
   return (
@@ -74,18 +101,22 @@ function GroupCreate() {
             Tema projekta
           </Label>
           <InputGroup>
+            <InputGroupAddon addonType="append">
+              <InputGroupText>
+                <BsCursorText className="mb-1 mt-1" />
+              </InputGroupText>
+            </InputGroupAddon>
             <Input
+              invalid={formErrors.theme}
               type="text"
               name="theme"
               id="theme"
               value={formData.theme}
               onChange={handleChange}
             />
-            <InputGroupAddon addonType="append">
-              <InputGroupText>
-                <BsCursorText className="mb-1 mt-1" />
-              </InputGroupText>
-            </InputGroupAddon>
+            <FormFeedback invalid>
+              Tema projekta mora imati od 0 do 50 karaktera
+            </FormFeedback>
           </InputGroup>
         </FormGroup>
         <FormGroup className="pt-2 pb-4">

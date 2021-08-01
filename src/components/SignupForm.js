@@ -54,7 +54,6 @@ function Signup() {
     });
 
     var error;
-    const re = "^S+@S+$";
     if (name == "name" || name == "lastname") error = value.length == 0;
     else if (name == "email") error = !validEmail.test(value);
     else if (name == "password")
@@ -69,6 +68,7 @@ function Signup() {
 
   const handleSubmit = (e) => {
     e.preventDefault();
+    // const pathname = window.location.pathname;
 
     const user = {
       name: formData.name,
@@ -76,14 +76,22 @@ function Signup() {
       email: formData.email,
       password: formData.password,
     };
-    
+
+    if (
+      user.name.length == 0 ||
+      user.lastname.length == 0 ||
+      user.email.length == 0 ||
+      user.password.length == 0
+    )
+      alert("Sva polja moraju biti popunjena!");
+
     if (Object.values(formErrors).every((formError) => formError == false)) {
       axios
         .post("http://localhost:3000/users/createUser", user)
-        .then(res => {
+        .then(() => {
           switchRoute("/groups");
         })
-        .catch()
+        .catch();
     }
   };
 
