@@ -9,10 +9,11 @@ import {
   InputGroupAddon,
   InputGroupText,
 } from "reactstrap";
-import "./Form.css"
+import "./Form.css";
 import { AiOutlineLock } from "react-icons/ai";
 import { HiOutlineMail } from "react-icons/hi";
 import { useHistory } from "react-router-dom";
+import axios from "axios";
 
 function Login() {
   const history = useHistory();
@@ -42,14 +43,21 @@ function Login() {
       email: formData.email,
       password: formData.password,
     };
-    
-    switchRoute("/")
+
+    axios
+      .post("http://localhost:3000/users/login", user)
+      .then((res) => {
+        console.log(res.data.message);
+        if(res.data.message == "Success!") switchRoute("/");
+        else alert("Pogrešan email ili šifra");
+      })
+      .catch();
   };
 
   return (
     <div>
       <Label tag="h1" className="text-center login-label">
-        LOGIN
+        LOGIN 
       </Label>
       <Form className="login-form form rounded border">
         <InputGroup className="pt-3">
@@ -58,7 +66,13 @@ function Login() {
               <HiOutlineMail className="mb-1 mt-1" />
             </InputGroupText>
           </InputGroupAddon>
-          <Input type="email" name="email" placeholder="Email adress" value={formData.email} onChange={handleChange} />
+          <Input
+            type="email"
+            name="email"
+            placeholder="Email adress"
+            value={formData.email}
+            onChange={handleChange}
+          />
         </InputGroup>
         <InputGroup className="pt-3 pb-2">
           <InputGroupAddon addonType="prepend">
@@ -66,13 +80,26 @@ function Login() {
               <AiOutlineLock className="mb-1 mt-1" />
             </InputGroupText>
           </InputGroupAddon>
-          <Input type="password" name="password" placeholder="Password" value={formData.password} onChange={handleChange} />
+          <Input
+            type="password"
+            name="password"
+            placeholder="Password"
+            value={formData.password}
+            onChange={handleChange}
+          />
         </InputGroup>
-        <Button color="dark" size="lg" className="block mt-2" onClick={handleSubmit}>
+        <Button
+          color="dark"
+          size="lg"
+          className="block mt-2"
+          onClick={handleSubmit}
+        >
           Login
         </Button>
         <div className="text-center mt-2 mb-4">
-          <a href="/sign-up" className="small">Nemate račun? Registrujte se</a>
+          <a href="/sign-up" className="small">
+            Nemate račun? Registrujte se
+          </a>
         </div>
       </Form>
     </div>
