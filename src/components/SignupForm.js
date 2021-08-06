@@ -13,7 +13,7 @@ import {
 import { useHistory } from "react-router-dom";
 import { HiOutlineMail } from "react-icons/hi";
 import { AiOutlineLock } from "react-icons/ai";
-import { validEmail, validPassword } from "./regex.js";
+import { validEmail } from "./regex.js";
 import axios from "axios";
 import "./Form.css";
 
@@ -54,11 +54,11 @@ function Signup() {
     });
 
     var error;
-    if (name == "name" || name == "lastname") error = value.length == 0;
-    else if (name == "email") error = !validEmail.test(value);
-    else if (name == "password")
+    if (name === "name" || name === "lastname") error = value.length === 0;
+    else if (name === "email") error = !validEmail.test(value);
+    else if (name === "password")
       error = !(value.length >= 8 && value.length <= 20);
-    else if (name == "repeatedpassword") error = value != formData.password;
+    else if (name === "repeatedpassword") error = value !== formData.password;
 
     updateFormErrors({
       ...formErrors,
@@ -78,20 +78,24 @@ function Signup() {
     };
 
     if (
-      user.name.length == 0 ||
-      user.lastname.length == 0 ||
-      user.email.length == 0 ||
-      user.password.length == 0
+      user.name.length === 0 ||
+      user.lastname.length === 0 ||
+      user.email.length === 0 ||
+      user.password.length === 0
     )
       alert("Sva polja moraju biti popunjena!");
 
-    if (Object.values(formErrors).every((formError) => formError == false)) {
-      axios
-        .post("http://localhost:3000/users/createUser", user)
-        .then(() => {
-          switchRoute("/groups");
-        })
-        .catch();
+    if (Object.values(formErrors).every((formError) => formError === false)) {
+      axios.get("http://localhost:3000/users").then((res) => {
+        if (res.data.every((user) => user.email !== formData.email)) {
+          axios
+            .post("http://localhost:3000/users/createUser", user)
+            .then(() => {
+              switchRoute("/groups");
+            })
+            .catch();
+        } else alert("Već postoji korisnik sa unesenim emailom!");
+      });
     }
   };
 

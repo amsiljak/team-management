@@ -46,19 +46,21 @@ function GroupCreate() {
     });
 
     var error;
-    if (name == "theme") error = !(value.length > 0 && value.length < 50);
+    if (name === "theme") {
+      error = !(value.length > 0 && value.length < 50);
 
-    updateFormErrors({
-      ...formErrors,
-      theme: error,
-    });
+      updateFormErrors({
+        ...formErrors,
+        theme: error,
+      });
+    }
   };
 
   const handleSubmit = (e) => {
     e.preventDefault();
 
-    if (formData.theme.length == 0) alert("Morate unijeti temu projekta!");
-    else {
+    if (formData.theme.length === 0) alert("Morate unijeti temu projekta!");
+    else if (formErrors.theme === false) {
       const group = {
         no: formData.no,
         theme: formData.theme,

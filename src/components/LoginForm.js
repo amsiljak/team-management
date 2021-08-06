@@ -1,19 +1,20 @@
 import React from "react";
 import {
   Form,
-  FormGroup,
   Label,
   Input,
   Button,
   InputGroup,
   InputGroupAddon,
   InputGroupText,
+  FormFeedback,
 } from "reactstrap";
 import "./Form.css";
 import { AiOutlineLock } from "react-icons/ai";
 import { HiOutlineMail } from "react-icons/hi";
 import { useHistory } from "react-router-dom";
 import axios from "axios";
+import { validEmail } from "./regex.js";
 
 function Login() {
   const history = useHistory();
@@ -29,35 +30,59 @@ function Login() {
 
   const [formData, updateFormData] = React.useState(initialFormData);
 
+  const initialFormErrors = {
+    theme: false,
+  };
+
+  const [formErrors, updateFormErrors] = React.useState(initialFormErrors);
+
   const handleChange = (e) => {
+    const name = e.target.name;
+    const value = e.target.value;
+
     updateFormData({
       ...formData,
       [e.target.name]: e.target.value.trim(),
     });
+
+    var error;
+    if (name === "email") {
+      error = !validEmail.test(value);
+
+      updateFormErrors({
+        ...formErrors,
+        email: error,
+      });
+    }
   };
 
   const handleSubmit = (e) => {
     e.preventDefault();
 
-    const user = {
-      email: formData.email,
-      password: formData.password,
-    };
+    if (formData.email.length === 0) alert("Morate unijeti email!");
+    else if (formData.password.length === 0) alert("Morate unijeti šifru!");
+    else if (formErrors.email === false) {
+      const user = {
+        email: formData.email,
+        password: formData.password,
+      };
 
-    axios
-      .post("http://localhost:3000/users/login", user)
-      .then((res) => {
-        console.log(res.data.message);
-        if(res.data.message == "Success!") switchRoute("/");
-        else alert("Pogrešan email ili šifra");
-      })
-      .catch();
+      axios
+        .post("http://localhost:3000/users/login", user)
+        .then((res) => {
+          if (res.data.message === "Success") switchRoute("/");
+          else alert("Pogrešan email ili šifra");
+        })
+        .catch((err) => {
+          console.log(err);
+        });
+    }
   };
 
   return (
     <div>
       <Label tag="h1" className="text-center login-label">
-        LOGIN 
+        LOGIN
       </Label>
       <Form className="login-form form rounded border">
         <InputGroup className="pt-3">
@@ -67,12 +92,14 @@ function Login() {
             </InputGroupText>
           </InputGroupAddon>
           <Input
+            invalid={formErrors.email}
             type="email"
             name="email"
             placeholder="Email adress"
             value={formData.email}
             onChange={handleChange}
           />
+          <FormFeedback invalid>Unesite validnu email adresu!</FormFeedback>
         </InputGroup>
         <InputGroup className="pt-3 pb-2">
           <InputGroupAddon addonType="prepend">
