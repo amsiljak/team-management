@@ -20,7 +20,8 @@ app.use(express.static(path.join(__dirname, "build")));
 app.use("/users", require("./routes/users"));
 // app.use("/groups", checkAuthenticated);
 app.use("/groups", require("./routes/groups"));
-app.use(express.json());
+app.use("/tasks", require("./routes/tasks"));
+app.use(express.json()); 
 
 app.get(
   "/*",

@@ -35,6 +35,11 @@ router.get("/", (req, res) => {
     });
 });
 
+router.get("/user", (req, res) => {
+  if(req.user) res.send(req.user);
+  else res.send({message: "User not logged in"});
+})
+
 router.post("/createUser", (req, res) => {
   bcrypt.hash(req.body.password, saltRounds, (err, hash) => {
     if (err) {
@@ -57,10 +62,8 @@ router.post("/createUser", (req, res) => {
 });
 
 router.post(
-  "/login",
-  passport.authenticate("local", {
-    failureRedirect: "/",
-  }),
+  "/login", 
+  passport.authenticate("local"),
   (req, res) => {
     if (req.user) {
       res.send({ message: "Success" });
@@ -79,7 +82,7 @@ router.post("/setGroup", (req, res) => {
 });
 
 router.delete("/", (req, res) => {
-  User.destroy({ where: { email: "admin@example.co" } });
+  User.destroy({ where: { email: "" } });
 });
 
 router.post("/logout", (req, res) => {

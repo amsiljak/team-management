@@ -15,5 +15,5 @@ const Group = db.define("group", {
 
 module.exports = Group;
 
-//kreiranje tabele u bazi
-// db.sync({ });
+// kreiranje tabele u bazi
+db.sync({ });

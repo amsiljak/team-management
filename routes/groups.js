@@ -10,7 +10,7 @@ router.post("/createGroup", (req, res) => {
       res.json("Group added successfully");
     })
     .catch((err) => {
-      res.status(400).send("unable to save to database");
+      res.status(400).send("Unable to save to database");
     });
 });
 

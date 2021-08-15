@@ -8,13 +8,34 @@ import {
   UncontrolledDropdown,
   DropdownToggle,
   DropdownMenu,
-  DropdownItem
+  DropdownItem,
 } from "reactstrap";
+import { useHistory } from "react-router-dom";
+import axios from 'axios';
 
 function NavBar() {
+  const history = useHistory();
+
+  const switchRoute = (link) => {
+    history.push(link);
+  };  
+
   const [isOpen, setIsOpen] = useState(false);
 
   const toggle = () => setIsOpen(!isOpen);
+
+  const handleLogout = (e) => {
+    e.preventDefault();
+
+    axios
+      .post("http://localhost:3000/users/logout", { withCredentials: "true" })
+      .then((res) => {
+        switchRoute("/login");
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  };
 
   return (
     <div>
@@ -32,7 +53,7 @@ function NavBar() {
               <DropdownMenu right>
                 <DropdownItem>Moj profil</DropdownItem>
                 <DropdownItem divider />
-                <DropdownItem>Odjavi se</DropdownItem>
+                <DropdownItem onClick={handleLogout}>Odjavi se</DropdownItem>
               </DropdownMenu>
             </UncontrolledDropdown>
           </Nav>

@@ -7,11 +7,7 @@ function Layout() {
   return (
     <>
       <Navbar />
-      <BrowserRouter>
-        <Switch>
-          <Route path="/" component={Dashboard} />
-        </Switch>
-      </BrowserRouter>
+     <Dashboard/>
     </>
   );
 }

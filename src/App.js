@@ -3,8 +3,9 @@ import Login from "./pages/Login";
 import Layout from "./components/Layout/Layout";
 import Signup from "./pages/Signup";
 import Groups from "./pages/Groups/Groups";
+import TaskCreate from "./pages/TaskCreate";
 import GroupCreate from "./pages/GroupCreate";
-import { Switch, Route, BrowserRouter, Redirect } from "react-router-dom";
+import { Switch, Route, BrowserRouter } from "react-router-dom";
 import axios from "axios";
 import { useHistory } from "react-router-dom";
 
@@ -51,6 +52,8 @@ function App() {
           /> */}
           <Route path="/groups" component={Groups} />
           <Route path="/sign-up" component={Signup} />
+          <Route path="/group-create" component={GroupCreate} />
+          <Route path="/task-create" component={TaskCreate} />
           <Route path="/" component={Layout} />
         </Switch>
       </BrowserRouter>
