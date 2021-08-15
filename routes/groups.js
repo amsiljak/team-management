@@ -14,4 +14,10 @@ router.post("/createGroup", (req, res) => {
     });
 });
 
+router.get("/getAllGroups", (req, res) => {
+  Group.findAll({})
+    .then((result) => res.send(result))
+    .catch(() => res.status(400));
+});
+
 module.exports = router;

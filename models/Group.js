@@ -1,5 +1,5 @@
 const { Sequelize } = require("sequelize");
-const db = require("../config/database");
+const db = require(".././config/database");
 
 const Group = db.define("group", {
   no: {
@@ -16,4 +16,4 @@ const Group = db.define("group", {
 module.exports = Group;
 
 //kreiranje tabele u bazi
-// db.sync({ force: true });
+// db.sync({ });

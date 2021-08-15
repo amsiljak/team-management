@@ -5,14 +5,15 @@ import axios from "axios";
 function Dashboard() {
   const [user, setUser] = useState([]);
 
-  useEffect(() => {
-    //withCredentials za cookie
-    axios
-      .get("http://localhost:3000/users/user", { withCredentials: "true" })
-      .then((res) => {
-        setUser(res.data);
-      });
-  }, []);
+  // useEffect(() => {
+  //   //withCredentials za cookie
+  //   axios
+  //     .get("http://localhost:3000/users/user", { withCredentials: "true" })
+  //     .then((res) => {
+  //       setUser(res.data);
+  //     });
+  // }, []);
+
   return (
     <div>
       <Label className="px-5">jnaksfjnajk</Label>

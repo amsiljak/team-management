@@ -20,14 +20,9 @@ initializePassport(
   }
 );
 
-router.get("/user", (req, res) => {
-  User.findOne({ where: { id: req.user.id } })
-    .then((result) => {
-      res.send(result);
-    })
-    .catch((err) => {
-      res.send({ message: "No users" });
-    });
+router.get("/isLoggedIn", (req, res) => {
+  if (req.user) res.send(true);
+  else res.send(false);
 });
 
 router.get("/", (req, res) => {
@@ -67,10 +62,21 @@ router.post(
     failureRedirect: "/",
   }),
   (req, res) => {
-    if (req.user) res.send({ message: "Success" });
-    else res.status(400).send({ message: "Fail" });
+    if (req.user) {
+      res.send({ message: "Success" });
+    } else res.status(400).send({ message: "Fail" });
   }
 );
+
+router.post("/setGroup", (req, res) => {
+  User.update({ groupid: req.body.groupId }, { where: { id: req.user.id } })
+    .then(() => {
+      res.json("Group set successfully");
+    })
+    .catch((err) => {
+      res.status(400).send("Unable to save to database");
+    });
+});
 
 router.delete("/", (req, res) => {
   User.destroy({ where: { email: "admin@example.co" } });

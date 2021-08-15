@@ -1,14 +1,14 @@
 import React, { useState } from "react";
 import {
-  // Collapse,
+  Collapse,
   Navbar,
-  // NavbarToggler,
-  // NavbarBrand,
-  // Nav,
-  // UncontrolledDropdown,
-  // DropdownToggle,
-  // DropdownMenu,
-  // DropdownItem
+  NavbarToggler,
+  NavbarBrand,
+  Nav,
+  UncontrolledDropdown,
+  DropdownToggle,
+  DropdownMenu,
+  DropdownItem
 } from "reactstrap";
 
 function NavBar() {
@@ -19,7 +19,7 @@ function NavBar() {
   return (
     <div>
       <Navbar color="light" light expand="md">
-        {/* <NavbarBrand className="ml-3" href="/">
+        <NavbarBrand className="ml-3" href="/">
           reactstrap
         </NavbarBrand>
         <NavbarToggler onClick={toggle} />
@@ -36,7 +36,7 @@ function NavBar() {
               </DropdownMenu>
             </UncontrolledDropdown>
           </Nav>
-        </Collapse> */}
+        </Collapse>
       </Navbar>
     </div>
   );

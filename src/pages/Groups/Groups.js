@@ -1,28 +1,30 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { Button, Label } from "reactstrap";
 import { useHistory } from "react-router-dom";
 import "./Groups.css";
+import axios from "axios";
 import GroupComponent from "../../components/Group/Group";
 
 function Groups() {
+  const [groups, setGroups] = useState([]);
+
+  useEffect(() => {
+    axios
+      .get("http://localhost:3000/groups/getAllGroups", { withCredentials: "true" })
+      .then((res) => setGroups(res.data))
+      .catch((e) => console.log(e));
+  }, []);
+
   const switchRoute = (link) => {
     history.push(link);
   };
 
   const history = useHistory();
 
-  const groupSelectedCallback = () => {
-    switchRoute("/sign-up");
+  const groupSelectedCallback = (e) => {
+    switchRoute("/");
   };
 
-  const groups = [
-    { id: 1, number: 6, theme: "Bankarski sistem" },
-    { id: 2, number: 3, theme: "Kino" },
-    { id: 1, number: 6, theme: "Bankarski sistem" },
-    { id: 2, number: 3, theme: "Kino" },
-    { id: 1, number: 6, theme: "Bankarski sistem" },
-    { id: 2, number: 3, theme: "Kino" },
-  ];
   return (
     <div className="form">
       <h2 className="text-center mt-5">Pridružite se svojoj grupi</h2>

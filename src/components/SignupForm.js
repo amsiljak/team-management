@@ -13,7 +13,7 @@ import {
 import { useHistory } from "react-router-dom";
 import { HiOutlineMail } from "react-icons/hi";
 import { AiOutlineLock } from "react-icons/ai";
-import { validEmail } from "./regex.js";
+import { validEmail } from "../regex.js";
 import axios from "axios";
 import "./Form.css";
 

@@ -16,24 +16,28 @@ app.use(passport.initialize());
 app.use(passport.session());
 
 // app.use(express.static(path.join(__dirname, "build")), checkAuthenticated);
-// app.use(express.static(path.join(__dirname, "build")));
+app.use(express.static(path.join(__dirname, "build")));
 app.use("/users", require("./routes/users"));
-app.use("/groups", checkAuthenticated);
+// app.use("/groups", checkAuthenticated);
 app.use("/groups", require("./routes/groups"));
 app.use(express.json());
- 
-// app.get("/*", (req, res) => {
-  // if(req.isAuthenticated()) {
-    // res.sendFile(path.join(__dirname, "build", "index.html"));}
-// }
-// );
 
-function checkAuthenticated(req, res, next) {console.log("ajs");
-  if (req.isAuthenticated()) {  
+app.get(
+  "/*",
+  (req, res) => {
+    // if(req.isAuthenticated()) {
+    res.sendFile(path.join(__dirname, "build", "index.html"));
+  }
+  // }
+);
+ 
+function checkAuthenticated(req, res, next) {
+  console.log("ajs");
+  if (req.isAuthenticated()) {
     return next();
   }
-  
-  res.redirect('/sign-up');
+
+  res.redirect("/login");
 }
 
 function checkNotAuthenticated(req, res, next) {
