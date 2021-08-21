@@ -1,35 +1,36 @@
 import React, { useEffect, useState } from "react";
 import Login from "./pages/Login";
-import Layout from "./components/Layout/Layout";
+import Layout from "./pages/Layout";
 import Signup from "./pages/Signup";
-import Groups from "./pages/Groups/Groups";
+import Groups from "./pages/Groups";
 import TaskCreate from "./pages/TaskCreate";
 import GroupCreate from "./pages/GroupCreate";
-import { Switch, Route, BrowserRouter } from "react-router-dom";
+import { Switch, Route, BrowserRouter, Redirect } from "react-router-dom";
 import axios from "axios";
 import { useHistory } from "react-router-dom";
 
 function App() {
   const [loggedIn, setLoggedIn] = useState([]);
-
-  const history = useHistory();
-
-  const switchRoute = (link) => {
-    history.push(link);
-  };
+  const [joinedGroup, setJoinedGroup] = useState([]);
 
   useEffect(() => {
     const route = window.location.pathname;
 
     if (route === "/login" || route === "/sign-up") {
       return;
-    } 
+    }
 
     axios
-      .get("http://localhost:3000/users/isLoggedIn", { withCredentials: "true" })
+      .get("http://localhost:3000/users/loggedUser", {
+        withCredentials: "true",
+      })
       .then((res) => {
-        if (res.data.message === 'User logged in') setLoggedIn(true);
-        else setLoggedIn(false);
+        if (res.data.message) setLoggedIn(false);
+        else {
+          setLoggedIn(true);
+          if (res.data.groupid) setJoinedGroup(true);
+          else setJoinedGroup(false);
+        }
       })
       .catch((err) => {
         console.log(err);
@@ -41,20 +42,48 @@ function App() {
       <BrowserRouter>
         <Switch>
           <Route path="/login" component={Login} />
+          
           <Route path="/sign-up" component={Signup} />
-          {/* <Route
+          <Route
             path="/groups"
             render={() =>
               loggedIn ? (
                 <Route component={Groups} />
-              ) : (<Redirect to={{pathname: '/login'}} />)
+              ) : (
+                <Redirect to={{ pathname: "/login" }} />
+              )
             }
-          /> */}
-          <Route path="/groups" component={Groups} />
-          <Route path="/sign-up" component={Signup} />
-          <Route path="/group-create" component={GroupCreate} />
-          <Route path="/task-create" component={TaskCreate} />
-          <Route path="/" component={Layout} />
+          />
+          <Route
+            path="/group-create"
+            render={() =>
+              loggedIn ? (
+                <Route component={GroupCreate} />
+              ) : (
+                <Redirect to={{ pathname: "/login" }} />
+              )
+            }
+          />
+          <Route
+            path="/task-create"
+            render={() =>
+              loggedIn ? (
+                <Route component={TaskCreate} />
+              ) : (
+                <Redirect to={{ pathname: "/login" }} />
+              )
+            }
+          />
+          <Route
+            path="/"
+            render={() =>
+              loggedIn ? (
+                <Route component={Layout} />
+              ) : (
+                <Redirect to={{ pathname: "/login" }} />
+              )
+            }
+          />
         </Switch>
       </BrowserRouter>
     </div>

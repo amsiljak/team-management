@@ -6,10 +6,13 @@ const Task = db.define("task", {
     type: Sequelize.STRING,
   },
   category: {
-    type: Sequelize.STRING,
+    type: Sequelize.INTEGER,
   },
   description: {
     type: Sequelize.STRING,
+  },
+  groupid: {
+    type: Sequelize.INTEGER,
   },
 });
 

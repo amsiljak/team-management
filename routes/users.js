@@ -20,11 +20,6 @@ initializePassport(
   }
 );
 
-router.get("/isLoggedIn", (req, res) => {
-  if (req.user) res.send(true);
-  else res.send(false);
-});
-
 router.get("/", (req, res) => {
   User.findAll({})
     .then((result) => {
@@ -35,7 +30,7 @@ router.get("/", (req, res) => {
     });
 });
 
-router.get("/user", (req, res) => {
+router.get("/loggedUser", (req, res) => {
   if(req.user) res.send(req.user);
   else res.send({message: "User not logged in"});
 })
@@ -52,8 +47,8 @@ router.post("/createUser", (req, res) => {
       password: hash,
     };
     User.create(user)
-      .then(() => {
-        res.json("User added successfully");
+      .then((result) => {
+        res.json(result.id);
       })
       .catch((err) => {
         res.status(400).send("Unable to save to database");
@@ -72,7 +67,7 @@ router.post(
 );
 
 router.post("/setGroup", (req, res) => {
-  User.update({ groupid: req.body.groupId }, { where: { id: req.user.id } })
+  User.update({ groupid: req.body.groupId }, { where: { id: req.body.userId } })
     .then(() => {
       res.json("Group set successfully");
     })
@@ -82,7 +77,7 @@ router.post("/setGroup", (req, res) => {
 });
 
 router.delete("/", (req, res) => {
-  User.destroy({ where: { email: "" } });
+  User.destroy({ where: { } }).then();
 });
 
 router.post("/logout", (req, res) => {

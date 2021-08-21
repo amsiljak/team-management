@@ -1,16 +1,20 @@
 import React, { useEffect, useState } from "react";
 import { Button, Label } from "reactstrap";
-import { useHistory } from "react-router-dom";
+import { useHistory, useLocation } from "react-router-dom";
 import "./Groups.css";
 import axios from "axios";
-import GroupComponent from "../../components/Group/Group";
+import GroupComponent from "../components/Group";
 
 function Groups() {
   const [groups, setGroups] = useState([]);
+  const history = useHistory();
+  const location = useLocation();
 
   useEffect(() => {
     axios
-      .get("http://localhost:3000/groups/getAllGroups", { withCredentials: "true" })
+      .get("http://localhost:3000/groups/getAllGroups", {
+        withCredentials: "true",
+      })
       .then((res) => setGroups(res.data))
       .catch((e) => console.log(e));
   }, []);
@@ -19,10 +23,8 @@ function Groups() {
     history.push(link);
   };
 
-  const history = useHistory();
-
   const groupSelectedCallback = (e) => {
-    switchRoute("/");
+    switchRoute("/login");
   };
 
   return (
@@ -35,7 +37,11 @@ function Groups() {
         <a style={{ cursor: "pointer" }} onClick={groupSelectedCallback}>
           <div className="py-3 groups row">
             {groups.map((group) => (
-              <GroupComponent key={group.id} group={group} />
+              <GroupComponent
+                key={group.id}
+                group={group}
+                userId={location.state.id}
+              />
             ))}
           </div>
         </a>
@@ -48,7 +54,12 @@ function Groups() {
               color="dark"
               size="md"
               className="center mb-5 px-5"
-              onClick={() => switchRoute("/group-create")}
+              onClick={() =>
+                history.push({
+                  pathname: "/group-create",
+                  state: { id: location.state.id },
+                })
+              }
             >
               Kreiraj novu grupu
             </Button>

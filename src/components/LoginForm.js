@@ -95,7 +95,7 @@ function Login() {
             invalid={formErrors.email}
             type="email"
             name="email"
-            placeholder="Email adress"
+            placeholder="Email adresa"
             value={formData.email}
             onChange={handleChange}
           />
@@ -110,7 +110,7 @@ function Login() {
           <Input
             type="password"
             name="password"
-            placeholder="Password"
+            placeholder="Sifra"
             value={formData.password}
             onChange={handleChange}
           />

@@ -10,13 +10,14 @@ import {
   InputGroupText,
   FormFeedback,
 } from "reactstrap";
-import { useHistory } from "react-router-dom";
+import { useHistory, useLocation } from "react-router-dom";
 import "./Form.css";
 import { BsCursorText } from "react-icons/bs";
 import axios from "axios";
 
 function GroupCreate() {
   const history = useHistory();
+  const location = useLocation();
 
   const switchRoute = (link) => {
     history.push(link);
@@ -69,8 +70,11 @@ function GroupCreate() {
 
       axios
         .post("http://localhost:3000/groups/createGroup", group)
-        .then(() => {
-          switchRoute("/");
+        .then((res) => {
+          history.push({
+            pathname: "/groups",
+            state: { id: location.state.id },
+          });
         })
         .catch();
     }

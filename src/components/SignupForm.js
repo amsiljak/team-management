@@ -90,8 +90,12 @@ function Signup() {
         if (res.data.every((user) => user.email !== formData.email)) {
           axios
             .post("http://localhost:3000/users/createUser", user)
-            .then(() => {
-              switchRoute("/groups");
+            .then((res) => {
+              console.log(res.data);
+              history.push({
+                pathname: "/groups",
+                state: { id: res.data },
+              });
             })
             .catch();
         } else alert("Već postoji korisnik sa unesenim emailom!");

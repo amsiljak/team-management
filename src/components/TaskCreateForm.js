@@ -28,7 +28,6 @@ function TaskCreateForm() {
 
   const initialformErrors = {
     title: false,
-    category: false,
     description: false,
   };
 
@@ -40,36 +39,53 @@ function TaskCreateForm() {
 
     updateFormData({
       ...formData,
-      [name]: e.target.value.trim(),
+      [name]: e.target.value,
     });
 
-    var error;
-    if (name === "title") error = value.length === 0;
-    // else if (name === "email") error = !validEmail.test(value);
-    // else if (name === "password")
-    //   error = !(value.length >= 8 && value.length <= 20);
-    // else if (name === "repeatedpassword") error = value !== formData.password;
-
-    updateFormErrors({
-      ...formErrors,
-      [name]: error,
-    });
+    var error = false;
+    if (name === "title") {
+      updateFormErrors({
+        ...formErrors,
+        [name]: value.length === 0,
+      });
+    } else if (name === "description") {
+      updateFormErrors({
+        ...formErrors,
+        [name]: value.length > 500,
+      });
+    }
   };
 
   const handleSubmit = (e) => {
     e.preventDefault();
 
-    const task = {
-      title: formData.title,
-      category: formData.category,
-      description: formData.description,
-    };
+    var category;
+    switch (formData.category) {
+      case "Otvoreno":
+        category = 0;
+        break;
+      case "U izradi":
+        category = 1;
+        break;
+      case "Zavrseno":
+        category = 2;
+        break;
+    }
 
-    if (task.title.length === 0) alert("Naziv zadatka je obavezno polje!");
-
+    if (formData.title.length === 0) alert("Naziv zadatka je obavezno polje!");
     if (Object.values(formErrors).every((formError) => formError === false)) {
       axios
-        .post("http://localhost:3000/tasks/createTask", task)
+        .post(
+          "http://localhost:3000/tasks/createTask",
+          {
+            title: formData.title,
+            category: category,
+            description: formData.description,
+          },
+          {
+            withCredentials: "true",
+          }
+        )
         .then(() => {
           switchRoute("/");
         })
@@ -80,7 +96,7 @@ function TaskCreateForm() {
   return (
     <div>
       <Label tag="h1" className="text-center login-label">
-        Novi Zadatak
+        Novi zadatak
       </Label>
       <Form className="signup-form form">
         <FormGroup className="pt-2">
@@ -114,7 +130,7 @@ function TaskCreateForm() {
         <FormGroup className="pt-2">
           <Label for="title">Opis</Label>
           <Input
-            type="text"
+            type="textarea"
             name="description"
             id="description"
             value={formData.description}
