@@ -40,8 +40,8 @@ function NavBar() {
   return (
     <div>
       <Navbar color="light" light expand="md">
-        <NavbarBrand className="ml-3" href="/">
-          reactstrap
+        <NavbarBrand className="mx-3" href="/">
+          OOAD Team Management
         </NavbarBrand>
         <NavbarToggler onClick={toggle} />
         <Collapse isOpen={isOpen} navbar>

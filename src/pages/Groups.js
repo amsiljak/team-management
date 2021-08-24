@@ -19,32 +19,23 @@ function Groups() {
       .catch((e) => console.log(e));
   }, []);
 
-  const switchRoute = (link) => {
-    history.push(link);
-  };
-
-  const groupSelectedCallback = (e) => {
-    switchRoute("/login");
-  };
-
   return (
-    <div className="form">
+    <div>
       <h2 className="text-center mt-5">Pridružite se svojoj grupi</h2>
       <Label tag="p" size="md" className="text-center mt-1 mb-5">
         Odaberite grupu kojoj pripadate na predmetu OOAD
       </Label>
       <div>
-        <a style={{ cursor: "pointer" }} onClick={groupSelectedCallback}>
-          <div className="py-3 groups row">
-            {groups.map((group) => (
-              <GroupComponent
-                key={group.id}
-                group={group}
-                userId={location.state.id}
-              />
-            ))}
-          </div>
-        </a>
+        <div className="py-3 groups row">
+          {groups.map((group) => (
+            <GroupComponent
+              key={group.id}
+              group={group}
+              userId={location.state.id}
+            />
+          ))}
+        </div>
+
         <div className="new-group">
           <p className="text-center new-group-text">
             Ne vidite grupu kojoj pripadate?
@@ -53,7 +44,7 @@ function Groups() {
             <Button
               color="dark"
               size="md"
-              className="center mb-5 px-5"
+              className="mb-5 px-5"
               onClick={() =>
                 history.push({
                   pathname: "/group-create",

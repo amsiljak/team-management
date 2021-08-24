@@ -27,8 +27,25 @@ router.get("/getAllTasks", (req, res) => {
     .catch(() => res.status(400));
 });
 
+router.post("/updateTask", (req, res) => {
+  Task.update({ title: req.body.title, description: req.body.description, category: req.body.category }, { where: { id: req.body.id } })
+    .then(() => {
+      res.json("Task updated successfully");
+    })
+    .catch((err) => {
+      res.status(400).send("Unable to save to database");
+    });
+});
+
 router.delete("/", (req, res) => {
-  Task.destroy({ where: { title: "" } });
+  console.log(req.body.id);
+  console.log(req.body);
+  Task.destroy({ where: { id: req.body.id } }).then(() => {
+    res.json("Task deleted successfully");
+  })
+  .catch((err) => {
+    res.status(400).send("Unable to delete");
+  });;
 });
 
 module.exports = router;

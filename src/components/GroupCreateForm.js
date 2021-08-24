@@ -88,7 +88,7 @@ function GroupCreate() {
       <Label tag="p" size="md" className="text-center mt-1 mb-4">
         Unesite podatke o svojoj grupi
       </Label>
-      <Form className="group-create-form form rounded">
+      <Form className="group-create-form form center rounded">
         <FormGroup className="pt-2">
           <Label for="no" className="mb-1 mt-2">
             Broj grupe

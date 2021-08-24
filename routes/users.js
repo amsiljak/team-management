@@ -76,6 +76,7 @@ router.post("/setGroup", (req, res) => {
     });
 });
 
+
 router.delete("/", (req, res) => {
   User.destroy({ where: { } }).then();
 });

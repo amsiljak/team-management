@@ -106,13 +106,13 @@ function Signup() {
   return (
     <div>
       <div>
-        <Label tag="h1" className="text-center mt-5 class-name">
+        <Label tag="h2" className="text-center mt-5 class-name">
           Kreiranje računa
         </Label>
         <Label tag="p" size="md" className="text-center mt-1 mb-4">
           Kao prvi korak, unesite svoje lične podatke
         </Label>
-        <Form className="signup-form form">
+        <Form className="signup-form form center">
           <FormGroup className="pt-2">
             <Label for="name">Ime</Label>
             <Input

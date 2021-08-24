@@ -6,7 +6,7 @@ const Task = db.define("task", {
     type: Sequelize.STRING,
   },
   category: {
-    type: Sequelize.INTEGER,
+    type: Sequelize.STRING,
   },
   description: {
     type: Sequelize.STRING,

@@ -1,12 +1,12 @@
 import React, { useEffect, useState } from "react";
-import { Label, ListGroup, Row, Col, Button } from "reactstrap";
+import { Label, ListGroup, Row, Col, Button, Container } from "reactstrap";
 import Task from "./Task";
 import axios from "axios";
 import { useHistory } from "react-router-dom";
+import "./Form.css";
 
 function Dashboard() {
   const history = useHistory();
-  const [user, setUser] = useState([]);
   const [toDoTasks, setToDoTasks] = useState([]);
   const [doingTasks, setDoingTasks] = useState([]);
   const [doneTasks, setDoneTasks] = useState([]);
@@ -16,65 +16,78 @@ function Dashboard() {
   };
 
   useEffect(() => {
-    //withCredentials za cookie
-    axios
-      .get("http://localhost:3000/users/loggedUser", { withCredentials: "true" })
-      .then((res) => {
-        setUser(res.data);
-      });
-
     axios
       .get("http://localhost:3000/tasks/getAllTasks", {
         withCredentials: "true",
       })
       .then((res) => {
-        setToDoTasks(res.data.filter((task) => task.category === 0));
-        setDoingTasks(res.data.filter((task) => task.category === 1));
-        setDoneTasks(res.data.filter((task) => task.category === 2));
+        setToDoTasks(res.data.filter((task) => task.category.toString() === "Otvoreno"));
+        setDoingTasks(res.data.filter((task) => task.category === "U izradi"));
+        setDoneTasks(res.data.filter((task) => task.category === "Zavrseno"));
       });
   }, []);
 
   const handleSubmit = (e) => {
-    switchRoute('/task-create')
-  }
+    switchRoute("/task-create");
+  };
 
   return (
     <div>
-      <Label tag="h1">Dashboard</Label>
-      <Row className="mt-5">
-        <Col ml-3>
-          <ListGroup>
-            <Label tag="h6" className="text-center">Otvoreno</Label>
-            {toDoTasks.map((task) => (
-              <Task key={task.id} task={task} />
-            ))}
-          </ListGroup>
-        </Col>
-        <Col>
-          <ListGroup>
-            <Label tag="h6" className="text-center">U izradi</Label>
-            {doingTasks.map((task) => (
-              <Task key={task.id} task={task} />
-            ))}
-          </ListGroup>
-        </Col>
-        <Col>
-          <ListGroup>
-            <Label tag="h6" className="text-center">Završeno</Label>
-            {doneTasks.map((task) => (
-              <Task key={task.id} task={task} />
-            ))}
-          </ListGroup>
-        </Col>
-      </Row>
-      <Row>
-      <Col>
-        <Button color="dark"
-          size="md"
-          className="mt-2"
-          onClick={handleSubmit}>+ Dodaj zadatak</Button>
+      <Label tag="h1" style={{ fontSize: "160%" }} className="mx-3 mt-4">
+        Dashboard
+      </Label>
+      <Container>
+        <Row className="mt-3">
+          <Col lg="4" md="4" sm="6" className="mt-3">
+            <ListGroup>
+              <Label tag="p" className="text-center">
+                Otvoreno
+              </Label>
+              <span className="form px-4 py-3" style={{ minHeight: "300px" }}>
+                {toDoTasks.map((task) => (
+                  <Task key={task.id} task={task} />
+                ))}
+              </span>
+            </ListGroup>
           </Col>
-      </Row>
+          <Col lg="4" md="4" sm="6" className="mt-3">
+            <ListGroup>
+              <Label tag="p" className="text-center">
+                U izradi
+              </Label>
+              <span className="form px-4 py-3" style={{ minHeight: "300px" }}>
+                {doingTasks.map((task) => (
+                  <Task key={task.id} task={task} />
+                ))}
+              </span>
+            </ListGroup>
+          </Col>
+          <Col lg="4" md="4" sm="6" className="mt-3">
+            <ListGroup>
+              <Label tag="p" className="text-center">
+                Završeno
+              </Label>
+              <span className="form px-4 py-3" style={{ minHeight: "300px" }}>
+                {doneTasks.map((task) => (
+                  <Task key={task.id} task={task} />
+                ))}
+              </span>
+            </ListGroup>
+          </Col>
+        </Row>
+        <Row>
+          <Col>
+            <Button
+              color="dark"
+              size="md"
+              className="mt-5 mb-4"
+              onClick={handleSubmit}
+            >
+              + Dodaj zadatak
+            </Button>
+          </Col>
+        </Row>
+      </Container>
     </div>
   );
 }

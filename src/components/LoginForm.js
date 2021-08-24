@@ -75,6 +75,7 @@ function Login() {
         })
         .catch((err) => {
           console.log(err);
+          alert("Pogrešan email ili šifra")
         });
     }
   };
@@ -84,7 +85,7 @@ function Login() {
       <Label tag="h1" className="text-center login-label">
         LOGIN
       </Label>
-      <Form className="login-form form rounded border">
+      <Form className="login-form form center rounded border">
         <InputGroup className="pt-3">
           <InputGroupAddon addonType="prepend">
             <InputGroupText>
