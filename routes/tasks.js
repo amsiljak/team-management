@@ -38,8 +38,6 @@ router.post("/updateTask", (req, res) => {
 });
 
 router.delete("/", (req, res) => {
-  console.log(req.body.id);
-  console.log(req.body);
   Task.destroy({ where: { id: req.body.id } }).then(() => {
     res.json("Task deleted successfully");
   })

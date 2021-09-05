@@ -26,7 +26,7 @@ function GroupCreate() {
   const initialFormData = {
     no: "1",
     theme: "",
-    tutorialday: "Ponedjeljak",
+    // tutorialday: "Ponedjeljak",
   };
 
   const [formData, updateFormData] = React.useState(initialFormData);
@@ -65,7 +65,7 @@ function GroupCreate() {
       const group = {
         no: formData.no,
         theme: formData.theme,
-        tutorialday: formData.tutorialday,
+        // tutorialday: formData.tutorialday,
       };
 
       axios
@@ -102,7 +102,7 @@ function GroupCreate() {
             onChange={handleChange}
           />
         </FormGroup>
-        <FormGroup className="pt-2">
+        <FormGroup className="pt-2 pb-4">
           <Label for="theme" className="mb-1 mt-1">
             Tema projekta
           </Label>
@@ -125,7 +125,7 @@ function GroupCreate() {
             </FormFeedback>
           </InputGroup>
         </FormGroup>
-        <FormGroup className="pt-2 pb-4">
+        {/* <FormGroup className="pt-2 pb-4">
           <Label for="tutorialday" className="mb-1 mt-1">
             Dan održavanja tutorijala
           </Label>
@@ -142,7 +142,7 @@ function GroupCreate() {
             <option>Cetvrtak</option>
             <option>Petak</option>
           </Input>
-        </FormGroup>
+        </FormGroup> */}
         <Button
           color="dark"
           size="lg"

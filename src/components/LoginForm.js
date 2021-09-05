@@ -70,8 +70,11 @@ function Login() {
       axios
         .post("http://localhost:3000/users/login", user)
         .then((res) => {
-          if (res.data.message === "Success") switchRoute("/");
-          else alert("Pogrešan email ili šifra");
+          if (res.data.message === "Fail") alert("Pogrešan email ili šifra");
+          else {
+            localStorage.setItem('user',  JSON.stringify(res.data));
+            switchRoute("/");
+          }
         })
         .catch((err) => {
           console.log(err);

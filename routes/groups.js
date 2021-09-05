@@ -20,4 +20,14 @@ router.get("/getAllGroups", (req, res) => {
     .catch(() => res.status(400));
 });
 
+router.get("/group/:id", (req, res) => {
+  console.log( req.query['id']);
+  Group.findOne({where: {id: req.query['id']}})
+    .then((result) => {
+      console.log(result);
+      res.send(result);
+    })
+    .catch(() => res.status(400));
+});
+
 module.exports = router;

@@ -1,12 +1,12 @@
 import React, { useEffect, useState } from "react";
-import { Button, Label } from "reactstrap";
+import { Button, Label, Spinner } from "reactstrap";
 import { useHistory, useLocation } from "react-router-dom";
 import "./Groups.css";
 import axios from "axios";
 import GroupComponent from "../components/Group";
 
 function Groups() {
-  const [groups, setGroups] = useState([]);
+  const [groups, setGroups] = useState();
   const history = useHistory();
   const location = useLocation();
 
@@ -27,13 +27,20 @@ function Groups() {
       </Label>
       <div>
         <div className="py-3 groups row">
-          {groups.map((group) => (
-            <GroupComponent
-              key={group.id}
-              group={group}
-              userId={location.state.id}
-            />
-          ))}
+          {groups ? (
+            groups.map((group) => (
+              <GroupComponent
+                key={group.id}
+                group={group}
+                userId={location.state.id}
+                newUser={location.state.groupid ? false : true}
+              />
+            ))
+          ) : (
+            <div className="d-flex justify-content-center">
+              <Spinner color="primary" children="" className="" />
+            </div>
+          )}
         </div>
 
         <div className="new-group">

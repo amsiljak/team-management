@@ -30,7 +30,7 @@ router.get("/", (req, res) => {
     });
 });
 
-router.get("/loggedUser", (req, res) => {
+router.get("/loggedInUser", (req, res) => {
   if(req.user) res.send(req.user);
   else res.send({message: "User not logged in"});
 })
@@ -61,7 +61,7 @@ router.post(
   passport.authenticate("local"),
   (req, res) => {
     if (req.user) {
-      res.send({ message: "Success" });
+      res.send(req.user);
     } else res.status(400).send({ message: "Fail" });
   }
 );
@@ -76,6 +76,15 @@ router.post("/setGroup", (req, res) => {
     });
 });
 
+router.post("/updateUser", (req, res) => {
+  User.update({ name: req.body.name, lastname: req.body.lastname, email: req.body.email }, { where: { id: req.user.id } })
+    .then(() => {
+      res.json("User updated successfully");
+    })
+    .catch((err) => {
+      res.status(400).send("Unable to save to database");
+    });
+});
 
 router.delete("/", (req, res) => {
   User.destroy({ where: { } }).then();

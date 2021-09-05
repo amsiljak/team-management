@@ -8,9 +8,6 @@ const Group = db.define("group", {
   theme: {
     type: Sequelize.STRING,
   },
-  tutorialday: {
-    type: Sequelize.STRING,
-  },
 });
 
 module.exports = Group;

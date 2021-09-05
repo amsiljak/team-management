@@ -11,14 +11,14 @@ import {
   DropdownItem,
 } from "reactstrap";
 import { useHistory } from "react-router-dom";
-import axios from 'axios';
+import axios from "axios";
 
 function NavBar() {
   const history = useHistory();
 
   const switchRoute = (link) => {
     history.push(link);
-  };  
+  };
 
   const [isOpen, setIsOpen] = useState(false);
 
@@ -30,11 +30,18 @@ function NavBar() {
     axios
       .post("http://localhost:3000/users/logout", { withCredentials: "true" })
       .then((res) => {
-        switchRoute("/login");
+        if (res.data.message === "Success") {
+          localStorage.clear();
+          switchRoute("/login");
+        }
       })
       .catch((err) => {
         console.log(err);
       });
+  };
+
+  const handleMyProfile = (e) => {
+    switchRoute("/my-profile");
   };
 
   return (
@@ -50,8 +57,10 @@ function NavBar() {
               <DropdownToggle nav caret>
                 <a></a>
               </DropdownToggle>
-              <DropdownMenu right>
-                <DropdownItem>Moj profil</DropdownItem>
+              <DropdownMenu>
+                <DropdownItem onClick={handleMyProfile}>
+                  Moj profil
+                </DropdownItem>
                 <DropdownItem divider />
                 <DropdownItem onClick={handleLogout}>Odjavi se</DropdownItem>
               </DropdownMenu>

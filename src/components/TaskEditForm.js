@@ -11,7 +11,7 @@ import {
 import axios from "axios";
 import { useHistory, useLocation } from "react-router-dom";
 
-function TaskCreateForm() {
+function TaskEditForm() {
   const history = useHistory();
   const location = useLocation();
 
@@ -97,11 +97,11 @@ function TaskCreateForm() {
   return (
     <div>
       <Label tag="h3" className="text-center login-label">
-        Zadatak
+        Pregled zadatka
       </Label>
       <Form className="signup-form form center">
         <FormGroup className="pt-2">
-          <Label for="title">Naziv</Label>
+          <Label for="title" className="mb-1 mt-1">Naziv</Label>
           <Input
             invalid={formErrors.title}
             type="text"
@@ -129,7 +129,7 @@ function TaskCreateForm() {
           </Input>
         </FormGroup>
         <FormGroup className="pt-2">
-          <Label for="title">Opis</Label>
+          <Label for="title" className="mb-1 mt-1">Opis</Label>
           <Input
             invalid={formErrors.description}
             type="textarea"
@@ -163,4 +163,4 @@ function TaskCreateForm() {
   );
 }
 
-export default TaskCreateForm;
+export default TaskEditForm;

@@ -4,7 +4,7 @@ import axios from "axios";
 import { useHistory } from "react-router-dom";
 import "./Group.css";
 
-function Group({ group, userId }) {
+function Group({ group, userId, newUser }) {
   const history = useHistory();
 
   const switchRoute = (link) => {
@@ -19,7 +19,12 @@ function Group({ group, userId }) {
         { groupId, userId },
         { withCredentials: "true" }
       )
-      .then(switchRoute("/login"))
+      .then(() => {
+        if (newUser) switchRoute("/login");
+        else {
+          switchRoute("/");
+        }
+      })
       .catch((e) => console.log(e));
   };
 

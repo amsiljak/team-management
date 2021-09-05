@@ -16,6 +16,7 @@ import {
 } from "reactstrap";
 import axios from "axios";
 import { useHistory } from "react-router-dom";
+import "./Group.css";
 
 function Task({ task }) {
   const history = useHistory();
@@ -59,7 +60,7 @@ function Task({ task }) {
   return (
     <div className="my-1">
       <a style={{ cursor: "pointer" }} onClick={handleClick}>
-        <ListGroupItem key={task.id} onClick={taskSelectedCallback}>
+        <ListGroupItem key={task.id} onClick={taskSelectedCallback} className="card">
           <ListGroupItemHeading tag="h6">{task.title}</ListGroupItemHeading>
           <ListGroupItemText tag="p">{task.description}</ListGroupItemText>
         </ListGroupItem>
