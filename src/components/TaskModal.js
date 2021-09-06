@@ -1,41 +1,31 @@
-import React, { useState } from "react";
+import React from "react";
 import {
   ListGroupItem,
   ListGroupItemHeading,
   ListGroupItemText,
-  Button,
-  Modal,
-  ModalHeader,
-  ModalBody,
-  ModalFooter,
-  Input,
-  FormGroup,
-  FormFeedback,
-  Label,
-  Form,
+  // Button,
+  // Modal,
+  // ModalHeader,
+  // ModalBody,
+  // ModalFooter,
+  // Input,
+  // FormGroup,
+  // FormFeedback,
+  // Label,
+  // Form,
 } from "reactstrap";
-import axios from "axios";
 import { useHistory } from "react-router-dom";
 import "./Group.css";
 
 function Task({ task }) {
   const history = useHistory();
 
-  const [modal, setModal] = useState(false);
+  // const [modal, setModal] = useState(false);
 
-  const initialFormData = {
-    title: task.title,
-    description: task.description,
-    category: task.category,
-  };
-
-  const taskSelectedCallback = (e) => {};
-
-  const toggle = () => setModal(!modal);
-
+  // const toggle = () => setModal(!modal);
 
   const handleClick = (e) => {
-    toggle();
+    // toggle();
 
     history.push({
       pathname: "/task-edit",
@@ -43,30 +33,16 @@ function Task({ task }) {
     });
   };
 
-  const handleDelete = (e) => {
-    toggle();
-    axios
-      .delete(
-        "http://localhost:3000/tasks/",
-        {
-          id: task.id,
-        },
-        { withCredentials: "true" }
-      )
-      .then()
-      .catch((e) => console.log(e));
-  };
-
   return (
     <div className="my-1">
       <a style={{ cursor: "pointer" }} onClick={handleClick}>
-        <ListGroupItem key={task.id} onClick={taskSelectedCallback} className="card">
+        <ListGroupItem key={task.id} className="card">
           <ListGroupItemHeading tag="h6">{task.title}</ListGroupItemHeading>
           <ListGroupItemText tag="p">{task.description}</ListGroupItemText>
         </ListGroupItem>
       </a>
-      <Modal isOpen={modal} toggle={toggle} centered={true}>
-        <Form className="mx-3 my-3">
+      {/* <Modal isOpen={modal} toggle={toggle} centered={true}> */}
+      {/* <Form className="mx-3 my-3">
           <FormGroup className="pt-2">
             <Label tag="h6" for="title">
               Naziv
@@ -87,16 +63,16 @@ function Task({ task }) {
               Opis ne smije duži od 200 karaktera!
             </FormFeedback>
           </FormGroup>
-        </Form>
-        <ModalFooter>
-          {/* <Button color="primary" onClick={handleEdit}> */}
-            {/* Uredi
+        </Form> */}
+      {/* <ModalFooter> */}
+      {/* <Button color="primary" onClick={handleEdit}> */}
+      {/* Uredi
           </Button>{" "} */}
-          <Button color="danger" onClick={handleDelete}>
+      {/* <Button color="danger" onClick={handleDelete}>
             Obriši
-          </Button>
-        </ModalFooter>
-      </Modal>
+          </Button> */}
+      {/* </ModalFooter> */}
+      {/* </Modal> */}
     </div>
   );
 }

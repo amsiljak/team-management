@@ -20,10 +20,6 @@ import "./Form.css";
 function Signup() {
   const history = useHistory();
 
-  const switchRoute = (link) => {
-    history.push(link);
-  };
-
   const initialFormData = {
     name: "",
     lastname: "",
@@ -68,7 +64,6 @@ function Signup() {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    // const pathname = window.location.pathname;
 
     const user = {
       name: formData.name,
@@ -91,7 +86,6 @@ function Signup() {
           axios
             .post("http://localhost:3000/users/createUser", user)
             .then((res) => {
-              console.log(res.data);
               history.push({
                 pathname: "/groups",
                 state: { id: res.data },

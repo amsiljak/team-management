@@ -19,10 +19,6 @@ function GroupCreate() {
   const history = useHistory();
   const location = useLocation();
 
-  const switchRoute = (link) => {
-    history.push(link);
-  };
-
   const initialFormData = {
     no: "1",
     theme: "",

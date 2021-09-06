@@ -8,7 +8,7 @@ import {
   Container,
   Spinner,
 } from "reactstrap";
-import Task from "./Task";
+import Task from "./TaskModal";
 import axios from "axios";
 import { useHistory } from "react-router-dom";
 import "./Form.css";
@@ -34,9 +34,11 @@ function Dashboard() {
             res.data.filter((task) => task.category.toString() === "Otvoreno")
           );
           setDoingTasks(
-            res.data.filter((task) => task.category === "U izradi")
+            res.data.filter((task) => task.category.toString() === "U izradi")
           );
-          setDoneTasks(res.data.filter((task) => task.category === "Zavrseno"));
+          setDoneTasks(
+            res.data.filter((task) => task.category.toString() === "Zavrseno")
+          );
         });
     };
     fetchData();
@@ -54,7 +56,7 @@ function Dashboard() {
       <Container>
         <Row className="mt-3">
           <Col lg="4" md="4" sm="6" className="mt-3">
-            <ListGroup >
+            <ListGroup>
               <Label tag="p" className="text-center">
                 Otvoreno
               </Label>
@@ -62,7 +64,9 @@ function Dashboard() {
                 {toDoTasks ? (
                   toDoTasks.map((task) => <Task key={task.id} task={task} />)
                 ) : (
-                  <div className="d-flex justify-content-center"><Spinner color="primary" children="" className="" /></div>
+                  <div className="d-flex justify-content-center">
+                    <Spinner color="primary" children="" className="" />
+                  </div>
                 )}
               </span>
             </ListGroup>
@@ -77,7 +81,9 @@ function Dashboard() {
                 {doingTasks ? (
                   doingTasks.map((task) => <Task key={task.id} task={task} />)
                 ) : (
-                  <div className="d-flex justify-content-center"><Spinner color="primary" children="" /></div>
+                  <div className="d-flex justify-content-center">
+                    <Spinner color="primary" children="" />
+                  </div>
                 )}
               </span>
             </ListGroup>
@@ -91,7 +97,9 @@ function Dashboard() {
                 {doneTasks ? (
                   doneTasks.map((task) => <Task key={task.id} task={task} />)
                 ) : (
-                  <div className="d-flex justify-content-center"><Spinner color="primary" children="" className="" /></div>
+                  <div className="d-flex justify-content-center">
+                    <Spinner color="primary" children="" className="" />
+                  </div>
                 )}
               </span>
             </ListGroup>

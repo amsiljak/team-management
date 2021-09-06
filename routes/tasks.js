@@ -24,7 +24,7 @@ router.post("/createTask", (req, res) => {
 router.get("/getAllTasks", (req, res) => {
   Task.findAll({where: {groupid: req.user.groupid}})
     .then((result) => res.send(result))
-    .catch(() => res.status(400));
+    .catch(() => res.status(400)); 
 });
 
 router.post("/updateTask", (req, res) => {

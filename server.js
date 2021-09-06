@@ -15,38 +15,15 @@ app.use(
 app.use(passport.initialize());
 app.use(passport.session());
 
-// app.use(express.static(path.join(__dirname, "build")), checkAuthenticated);
 app.use(express.static(path.join(__dirname, "build")));
 app.use("/users", require("./routes/users"));
-// app.use("/groups", checkAuthenticated);
 app.use("/groups", require("./routes/groups"));
 app.use("/tasks", require("./routes/tasks"));
-app.use(express.json()); 
+app.use(express.json());
 
-app.get(
-  "/*",
-  (req, res) => {
-    // if(req.isAuthenticated()) {
-    res.sendFile(path.join(__dirname, "build", "index.html"));
-  }
-  // }
-);
- 
-function checkAuthenticated(req, res, next) {
-  console.log("ajs");
-  if (req.isAuthenticated()) {
-    return next();
-  }
-
-  res.redirect("/login");
-}
-
-function checkNotAuthenticated(req, res, next) {
-  if (req.isAuthenticated()) {
-    return res.redirect("/");
-  }
-  next();
-}
+app.get("/*", (req, res) => {
+  res.sendFile(path.join(__dirname, "build", "index.html"));
+});
 
 const PORT = process.env.PORT || 3000;
 

@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React from "react";
 import "./Form.css";
 import {
   Form,
@@ -42,7 +42,6 @@ function TaskCreateForm() {
       [name]: e.target.value,
     });
 
-    var error = false;
     if (name === "title") {
       updateFormErrors({
         ...formErrors,

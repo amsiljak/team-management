@@ -72,13 +72,13 @@ function Login() {
         .then((res) => {
           if (res.data.message === "Fail") alert("Pogrešan email ili šifra");
           else {
-            localStorage.setItem('user',  JSON.stringify(res.data));
+            localStorage.setItem("user", JSON.stringify(res.data));
             switchRoute("/");
           }
         })
         .catch((err) => {
           console.log(err);
-          alert("Pogrešan email ili šifra")
+          alert("Pogrešan email ili šifra");
         });
     }
   };

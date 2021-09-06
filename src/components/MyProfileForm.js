@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import {
   Form,
   FormGroup,
@@ -12,34 +12,12 @@ import {
 } from "reactstrap";
 import { useHistory } from "react-router-dom";
 import { HiOutlineMail } from "react-icons/hi";
-import { AiOutlineLock } from "react-icons/ai";
 import { validEmail } from "../regex.js";
 import axios from "axios";
 import "./Form.css";
 
 function MyProfileForm(props) {
-  // const [user, setUser] = useState([]);
-
-  // useEffect(() => {
-  //   axios
-  //     .get("http://localhost:3000/users/loggedInUser", {
-  //       withCredentials: "true",
-  //     })
-  //     .then((res) => {
-  //       console.log(res.data);
-  //         setUser(res.data);
-
-  //     })
-  //     .catch((err) => {
-  //       console.log(err);
-  //     });
-  // }, []);
-
   const history = useHistory();
-
-  const switchRoute = (link) => {
-    history.push(link);
-  };
 
   const initialFormData = {
     name: props.user.name,
@@ -96,7 +74,15 @@ function MyProfileForm(props) {
       axios
         .post("http://localhost:3000/users/updateUser", user)
         .then((res) => {
-          switchRoute("/");
+          const storageUser = JSON.parse(localStorage.getItem("user"));
+          const newUser = {
+            id: storageUser.id,
+            name: formData.name,
+            lastname: formData.lastname,
+            email: formData.email,
+          };
+          localStorage.setItem("user", JSON.stringify(newUser));
+          alert("Izmjene uspješno spremljene!");
         })
         .catch();
     }
@@ -107,7 +93,7 @@ function MyProfileForm(props) {
       pathname: "/groups",
       state: { id: props.user.id, groupid: props.user.groupid },
     });
-  }
+  };
 
   return (
     <div>
@@ -169,7 +155,11 @@ function MyProfileForm(props) {
             Spremi izmjene
           </Button>
           <div className="text-center mt-2 mb-4">
-            <a onClick={handleGroupChange} className="small" style={{ cursor: "pointer" }}>
+            <a
+              onClick={handleGroupChange}
+              className="small"
+              style={{ cursor: "pointer" }}
+            >
               Želite promijeniti grupu?
             </a>
           </div>

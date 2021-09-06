@@ -1,10 +1,12 @@
 import React from "react";
 import MyProfileForm from "../components/MyProfileForm";
+import Navbar from "../components/Navbar";
 
 function MyProfile(props) {
   return (
     <div>
-      <MyProfileForm user={props.user}/>
+      <Navbar />
+      <MyProfileForm user={props.user} />
     </div>
   );
 }

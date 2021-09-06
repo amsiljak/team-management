@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React from "react";
 import "./Form.css";
 import {
   Form,
@@ -101,7 +101,9 @@ function TaskEditForm() {
       </Label>
       <Form className="signup-form form center">
         <FormGroup className="pt-2">
-          <Label for="title" className="mb-1 mt-1">Naziv</Label>
+          <Label for="title" className="mb-1 mt-1">
+            Naziv
+          </Label>
           <Input
             invalid={formErrors.title}
             type="text"
@@ -129,7 +131,9 @@ function TaskEditForm() {
           </Input>
         </FormGroup>
         <FormGroup className="pt-2">
-          <Label for="title" className="mb-1 mt-1">Opis</Label>
+          <Label for="title" className="mb-1 mt-1">
+            Opis
+          </Label>
           <Input
             invalid={formErrors.description}
             type="textarea"
