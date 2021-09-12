@@ -8,7 +8,7 @@ import {
   Container,
   Spinner,
 } from "reactstrap";
-import Task from "./TaskModal";
+import Task from "./Task";
 import axios from "axios";
 import { useHistory } from "react-router-dom";
 import "./Form.css";
@@ -16,32 +16,26 @@ import "./Form.css";
 function Dashboard() {
   const history = useHistory();
   const [toDoTasks, setToDoTasks] = useState();
-  const [doingTasks, setDoingTasks] = useState();
+  const [inProgressTasks, setInProgressTasks] = useState();
   const [doneTasks, setDoneTasks] = useState();
 
   const switchRoute = (link) => {
     history.push(link);
   };
 
+  function getAxios(category = {}) {
+    return axios
+      .get("http://localhost:3000/tasks/getTasks/" + category, {
+        withCredentials: "true",
+      })
+      .then((res) => res.data)
+      .catch((err) => console.log(err));
+  }
+
   useEffect(() => {
-    const fetchData = async () => {
-      axios
-        .get("http://localhost:3000/tasks/getAllTasks", {
-          withCredentials: "true",
-        })
-        .then((res) => {
-          setToDoTasks(
-            res.data.filter((task) => task.category.toString() === "Otvoreno")
-          );
-          setDoingTasks(
-            res.data.filter((task) => task.category.toString() === "U izradi")
-          );
-          setDoneTasks(
-            res.data.filter((task) => task.category.toString() === "Zavrseno")
-          );
-        });
-    };
-    fetchData();
+    getAxios("todo").then((tasks) => setToDoTasks(tasks));
+    getAxios("inprogress").then((tasks) => setInProgressTasks(tasks));
+    getAxios("done").then((tasks) => setDoneTasks(tasks));
   }, []);
 
   const handleSubmit = (e) => {
@@ -78,8 +72,8 @@ function Dashboard() {
                 U izradi
               </Label>
               <span className="form px-4 py-3" style={{ minHeight: "300px" }}>
-                {doingTasks ? (
-                  doingTasks.map((task) => <Task key={task.id} task={task} />)
+                {inProgressTasks ? (
+                  inProgressTasks.map((task) => <Task key={task.id} task={task} />)
                 ) : (
                   <div className="d-flex justify-content-center">
                     <Spinner color="primary" children="" />

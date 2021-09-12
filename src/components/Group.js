@@ -10,6 +10,7 @@ function Group({ group, userId, newUser }) {
   const switchRoute = (link) => {
     history.push(link);
   };
+
   const groupSelectedCallback = (e) => {
     const groupId = group.id;
 

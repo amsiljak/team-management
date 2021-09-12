@@ -58,6 +58,19 @@ function TaskCreateForm() {
   const handleSubmit = (e) => {
     e.preventDefault();
 
+    var category;
+    switch (formData.category) {
+      case "Otvoreno":
+        category = "todo";
+        break;
+      case "U izradi":
+        category = "inprogress";
+        break;
+      case "Zavrseno":
+        category = "done";
+        break;
+    }
+    
     if (formData.title.length === 0) alert("Naziv zadatka je obavezno polje!");
     if (Object.values(formErrors).every((formError) => formError === false)) {
       axios
@@ -65,7 +78,7 @@ function TaskCreateForm() {
           "http://localhost:3000/tasks/createTask",
           {
             title: formData.title,
-            category: formData.category,
+            category: category,
             description: formData.description,
           },
           {

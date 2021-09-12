@@ -22,13 +22,28 @@ router.post("/createTask", (req, res) => {
 });
 
 router.get("/getAllTasks", (req, res) => {
-  Task.findAll({where: {groupid: req.user.groupid}})
+  Task.findAll({ where: { groupid: req.user.groupid } })
     .then((result) => res.send(result))
-    .catch(() => res.status(400)); 
+    .catch(() => res.status(400));
+});
+
+router.get("/getTasks/:category", (req, res) => {
+  Task.findAll({
+    where: { groupid: req.user.groupid, category: req.params.category },
+  })
+    .then((result) => res.send(result))
+    .catch(() => res.status(400));
 });
 
 router.post("/updateTask", (req, res) => {
-  Task.update({ title: req.body.title, description: req.body.description, category: req.body.category }, { where: { id: req.body.id } })
+  Task.update(
+    {
+      title: req.body.title,
+      description: req.body.description,
+      category: req.body.category,
+    },
+    { where: { id: req.body.id } }
+  )
     .then(() => {
       res.json("Task updated successfully");
     })
@@ -38,12 +53,13 @@ router.post("/updateTask", (req, res) => {
 });
 
 router.delete("/", (req, res) => {
-  Task.destroy({ where: { id: req.body.id } }).then(() => {
-    res.json("Task deleted successfully");
-  })
-  .catch((err) => {
-    res.status(400).send("Unable to delete");
-  });;
+  Task.destroy({ where: { id: req.body.id } })
+    .then(() => {
+      res.json("Task deleted successfully");
+    })
+    .catch((err) => {
+      res.status(400).send("Unable to delete");
+    });
 });
 
 module.exports = router;

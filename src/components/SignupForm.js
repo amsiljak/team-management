@@ -16,6 +16,7 @@ import { AiOutlineLock } from "react-icons/ai";
 import { validEmail } from "../regex.js";
 import axios from "axios";
 import "./Form.css";
+var User = require("../User.js");
 
 function Signup() {
   const history = useHistory();
@@ -65,12 +66,11 @@ function Signup() {
   const handleSubmit = (e) => {
     e.preventDefault();
 
-    const user = {
-      name: formData.name,
-      lastname: formData.lastname,
-      email: formData.email,
-      password: formData.password,
-    };
+    let user = new User.UserBuilder(formData.email)
+      .setName(formData.name)
+      .setLastname(formData.lastname)
+      .setPassword(formData.password)
+      .build();
 
     if (
       user.name.length === 0 ||

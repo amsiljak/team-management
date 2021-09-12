@@ -16,6 +16,8 @@ import { validEmail } from "../regex.js";
 import axios from "axios";
 import "./Form.css";
 
+var User = require("../User.js");
+
 function MyProfileForm(props) {
   const history = useHistory();
 
@@ -57,11 +59,10 @@ function MyProfileForm(props) {
   const handleSubmit = (e) => {
     e.preventDefault();
 
-    const user = {
-      name: formData.name,
-      lastname: formData.lastname,
-      email: formData.email,
-    };
+    let user = new User.UserBuilder(formData.email)
+      .setName(formData.name)
+      .setLastname(formData.lastname)
+      .build();
 
     if (
       user.name.length === 0 ||
@@ -69,18 +70,19 @@ function MyProfileForm(props) {
       user.email.length === 0
     )
       alert("Sva polja moraju biti popunjena!");
-
+      console.log(props.user.groupid);
     if (Object.values(formErrors).every((formError) => formError === false)) {
       axios
         .post("http://localhost:3000/users/updateUser", user)
         .then((res) => {
           const storageUser = JSON.parse(localStorage.getItem("user"));
-          const newUser = {
-            id: storageUser.id,
-            name: formData.name,
-            lastname: formData.lastname,
-            email: formData.email,
-          };
+
+          let newUser = new User.UserBuilder(formData.email)
+            .setId(storageUser.id)
+            .setName(formData.name)
+            .setLastname(formData.lastname)
+            .build();
+
           localStorage.setItem("user", JSON.stringify(newUser));
           alert("Izmjene uspješno spremljene!");
         })

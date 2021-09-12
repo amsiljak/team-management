@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import {
   Form,
   Label,
@@ -15,6 +15,8 @@ import { HiOutlineMail } from "react-icons/hi";
 import { useHistory } from "react-router-dom";
 import axios from "axios";
 import { validEmail } from "../regex.js";
+
+var User = require("../User.js");
 
 function Login() {
   const history = useHistory();
@@ -62,10 +64,9 @@ function Login() {
     if (formData.email.length === 0) alert("Morate unijeti email!");
     else if (formData.password.length === 0) alert("Morate unijeti šifru!");
     else if (formErrors.email === false) {
-      const user = {
-        email: formData.email,
-        password: formData.password,
-      };
+      let user = new User.UserBuilder(formData.email)
+        .setPassword(formData.password)
+        .build();
 
       axios
         .post("http://localhost:3000/users/login", user)
