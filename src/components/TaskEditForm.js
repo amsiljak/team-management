@@ -9,7 +9,10 @@ import {
   Button,
 } from "reactstrap";
 import axios from "axios";
+import Swal from "sweetalert2";
 import { useHistory, useLocation } from "react-router-dom";
+
+import { TaskCommand, DeleteCommand } from "../Command";
 
 function TaskEditForm() {
   const history = useHistory();
@@ -84,13 +87,27 @@ function TaskEditForm() {
   };
 
   const handleDelete = (e) => {
-    axios
-      .delete(
-        "http://localhost:3000/tasks/",
-        { data: { id: task.id } },
-        { withCredentials: "true" }
-      )
-      .then(() => switchRoute("/"))
+    const taskCommand = new TaskCommand();
+    taskCommand
+      .executeCommand(new DeleteCommand(task))
+      .then(() => {
+        Swal.fire({
+          title: "Zadatak uspješno obrisan!",
+          showDenyButton: true,
+          confirmButtonText: "Nastavi na početnu stranicu",
+          denyButtonText: "Poništi brisanje",
+        }).then((result) => {
+          if (result.isDenied) {
+            taskCommand.undo();
+            Swal.fire({
+              title: "Brisanje poništeno!",
+              confirmButtonText: "Nastavi na početnu stranicu",
+            }).then(() => {
+              switchRoute("/");
+            });
+          } else switchRoute("/");
+        });
+      })
       .catch((e) => console.log(e));
   };
 
